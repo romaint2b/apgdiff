@@ -422,6 +422,13 @@ public class PgDumpLoader { //NOPMD
             pos = sbStatement.indexOf("--", pos + 1);
         }
 
+        int restrict = sbStatement.indexOf("\\"); // restrict / unrestrict
+
+        if (restrict == 0 && sbStatement.indexOf("restrict")>0) {
+            sbStatement.setLength(0);
+            return;
+        } 
+        
         int endPos = sbStatement.indexOf("*/");
         while (endPos >= 0) {
             if (!isQuoted(sbStatement, endPos)) {
@@ -448,15 +455,15 @@ public class PgDumpLoader { //NOPMD
             final int pos) {
         boolean isQuoted = false;
         boolean insideDoubleQuotes = false;
-        boolean insideSingeQuote = false; // Determine if double quote is inside of a single quote.
+        boolean insideSingleQuote = false; // Determine if double quote is inside of a single quote.
         
         for (int curPos = 0; curPos < pos; curPos++) {
             // Check if the quote is inside of a double quotes
-            if (sbString.charAt(curPos) == '\"' && !insideSingeQuote ){
+            if (sbString.charAt(curPos) == '\"' && !insideSingleQuote ){
                 insideDoubleQuotes = !insideDoubleQuotes;
             }
             if (sbString.charAt(curPos) == '\'' && !insideDoubleQuotes ){
-                insideSingeQuote = !insideSingeQuote;
+                insideSingleQuote = !insideSingleQuote;
             }
             if(!insideDoubleQuotes){
                 if (sbString.charAt(curPos) == '\'') {
