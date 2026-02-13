@@ -9,6 +9,7 @@ import cz.startnet.utils.pgdiff.schema.PgColumn;
 import cz.startnet.utils.pgdiff.schema.PgColumnUtils;
 import cz.startnet.utils.pgdiff.schema.PgSchema;
 import cz.startnet.utils.pgdiff.schema.PgType;
+
 import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -193,11 +194,11 @@ public class PgDiffTypes {
      * @param newSchema        new schema
      * @param searchPathHelper search path helper
      */
-    public static void dropTypes(final PrintWriter writer,
+    public static void dropTypes(final PgDiffArguments arguments,final PrintWriter writer,
             final PgSchema oldSchema, final PgSchema newSchema,
             final SearchPathHelper searchPathHelper
             ) {
-        if (oldSchema == null) {
+        if (oldSchema == null || !arguments.isDropTypes()) {
             return;
         }
 

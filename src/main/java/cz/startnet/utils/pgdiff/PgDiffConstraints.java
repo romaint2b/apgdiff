@@ -8,6 +8,7 @@ package cz.startnet.utils.pgdiff;
 import cz.startnet.utils.pgdiff.schema.PgConstraint;
 import cz.startnet.utils.pgdiff.schema.PgSchema;
 import cz.startnet.utils.pgdiff.schema.PgTable;
+
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,10 +65,14 @@ public class PgDiffConstraints {
      *                         processed
      * @param searchPathHelper search path helper
      */
-    public static void dropConstraints(final PrintWriter writer,
+    public static void dropConstraints(final PgDiffArguments arguments,final PrintWriter writer,
             final PgSchema oldSchema, final PgSchema newSchema,
             final boolean primaryKey, final SearchPathHelper searchPathHelper
             ) {
+       if(!arguments.isDropConstraints()){
+          return;
+       }
+       
         for (final PgTable newTable : newSchema.getTables()) {
             final PgTable oldTable;
 

@@ -5,13 +5,13 @@
  */
 package cz.startnet.utils.pgdiff;
 
-import cz.startnet.utils.pgdiff.schema.PgRelation;
-import cz.startnet.utils.pgdiff.schema.PgRule;
-import cz.startnet.utils.pgdiff.schema.PgSchema;
-import cz.startnet.utils.pgdiff.schema.PgType;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+
+import cz.startnet.utils.pgdiff.schema.PgRelation;
+import cz.startnet.utils.pgdiff.schema.PgRule;
+import cz.startnet.utils.pgdiff.schema.PgSchema;
 
 /**
  * Diffs rules.
@@ -58,10 +58,13 @@ public class PgDiffRules {
      * @param newSchema        new schema
      * @param searchPathHelper search path helper
      */
-    public static void dropRules(final PrintWriter writer,
+    public static void dropRules(final PgDiffArguments arguments,final PrintWriter writer,
             final PgSchema oldSchema, final PgSchema newSchema,
             final SearchPathHelper searchPathHelper
             ) {
+          if(!arguments.isDropRules()){
+             return;
+          }
           for (final PgRelation newRelation : newSchema.getRels()) {
             final PgRelation oldRelation;
 

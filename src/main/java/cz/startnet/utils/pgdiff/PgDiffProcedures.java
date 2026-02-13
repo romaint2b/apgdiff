@@ -56,10 +56,9 @@ public class PgDiffProcedures {
      * @param newSchema        new schema
      * @param searchPathHelper search path helper
      */
-    public static void dropPocedures(final PrintWriter writer,
-            final PgDiffArguments arguments, final PgSchema oldSchema,
-            final PgSchema newSchema, final SearchPathHelper searchPathHelper) {
-        if (oldSchema == null) {
+    public static void dropProcedures(final PgDiffArguments arguments, final PrintWriter writer,
+            final PgSchema oldSchema, final PgSchema newSchema, final SearchPathHelper searchPathHelper) {
+        if (oldSchema == null || !arguments.isDropProcedures()) {
             return;
         }
 

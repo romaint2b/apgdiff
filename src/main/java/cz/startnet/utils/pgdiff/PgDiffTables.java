@@ -12,6 +12,7 @@ import cz.startnet.utils.pgdiff.schema.PgInheritedColumn;
 import cz.startnet.utils.pgdiff.schema.PgSchema;
 import cz.startnet.utils.pgdiff.schema.PgTable;
 import cz.startnet.utils.pgdiff.schema.PgRelationPrivilege;
+
 import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -35,9 +36,12 @@ public class PgDiffTables {
      * @param newSchema        new schema
      * @param searchPathHelper search path helper
      */
-    public static void dropClusters(final PrintWriter writer,
+    public static void dropClusters(final PgDiffArguments arguments,final PrintWriter writer,
             final PgSchema oldSchema, final PgSchema newSchema,
             final SearchPathHelper searchPathHelper) {
+       if(!arguments.isDropClusters()){
+          return;
+       }
         for (final PgTable newTable : newSchema.getTables()) {
             final PgTable oldTable;
 
@@ -284,8 +288,13 @@ public class PgDiffTables {
      * @param oldTable   original table
      * @param newTable   new table
      */
-    private static void addDropTableColumns(final List<String> statements,
+    private static void addDropTableColumns(final PgDiffArguments arguments,final List<String> statements,
             final PgTable oldTable, final PgTable newTable) {
+       if(!arguments.isDropColumns())
+       {
+          return;
+       }
+       
         for (final PgColumn column : oldTable.getColumns()) {
             if (!newTable.containsColumn(column.getName())) {
                 statements.add("\tDROP COLUMN " + PgDiffUtils.getDropIfExists() 
@@ -599,10 +608,10 @@ public class PgDiffTables {
      * @param newSchema        new schema
      * @param searchPathHelper search path helper
      */
-    public static void dropTables(final PrintWriter writer,
+    public static void dropTables(final PgDiffArguments arguments,final PrintWriter writer,
             final PgSchema oldSchema, final PgSchema newSchema,
             final SearchPathHelper searchPathHelper) {
-        if (oldSchema == null) {
+        if (oldSchema == null|| !arguments.isDropTables()) {
             return;
         }
 
@@ -628,12 +637,12 @@ public class PgDiffTables {
     private static void updateTableColumns(final PrintWriter writer,
             final PgDiffArguments arguments, final PgTable oldTable,
             final PgTable newTable, final SearchPathHelper searchPathHelper) {
-        @SuppressWarnings("CollectionWithoutInitialCapacity")
-        final List<String> statements = new ArrayList<String>();
-        @SuppressWarnings("CollectionWithoutInitialCapacity")
-        final List<PgColumn> dropDefaultsColumns = new ArrayList<PgColumn>();
-        final List<PgColumn> generatedColumns = new ArrayList<PgColumn>();
-        addDropTableColumns(statements, oldTable, newTable);
+        final List<String> statements = new ArrayList<>();
+        final List<PgColumn> dropDefaultsColumns = new ArrayList<>();
+        final List<PgColumn> generatedColumns = new ArrayList<>();
+        
+        addDropTableColumns(arguments,statements, oldTable, newTable);
+        
         addCreateTableColumns(
                 statements, arguments, oldTable, newTable, dropDefaultsColumns,generatedColumns);
         addModifyTableColumns(

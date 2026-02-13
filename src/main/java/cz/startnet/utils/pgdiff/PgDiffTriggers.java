@@ -58,9 +58,12 @@ public class PgDiffTriggers {
      * @param newSchema        new schema
      * @param searchPathHelper search path helper    
      */
-    public static void dropTriggers(final PrintWriter writer,
+    public static void dropTriggers(final PgDiffArguments arguments,final PrintWriter writer,
             final PgSchema oldSchema, final PgSchema newSchema,
             final SearchPathHelper searchPathHelper) {
+        if(!arguments.isDropTriggers()){
+           return;
+        }
         for (final PgRelation newRelation : newSchema.getRels()) {
             final PgRelation oldRelation;
 

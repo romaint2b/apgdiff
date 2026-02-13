@@ -74,6 +74,76 @@ public class PgDiffArguments {
      */
     private boolean useIfExists;
 
+   
+    /**
+     * Drop Columns
+     */
+    private boolean dropColumns=true;
+    /**
+     * Drop Tables
+     */
+    private boolean dropTables=true;
+    /**
+     * Drop Constraints
+     */
+    private boolean dropConstraints=true;
+    /**
+     * Drop Views
+     */
+    private boolean dropViews=true;
+    /**
+     * Drop Types
+     */
+    private boolean dropTypes=true;
+    /**
+     * Drop Triggers
+     */
+    private boolean dropTriggers=true;
+    /**
+     * Drop Rules
+     */
+    private boolean dropRules=true;
+    /**
+     * Drop Functions
+     */
+    private boolean dropFunctions=true;
+    /**
+     * Drop Procedure
+     */
+    private boolean dropProcedures=true;
+    /**
+     * Drop Indexes
+     */
+    private boolean dropIndexes=true;
+    /**
+     * Drop Clusters
+     */
+    private boolean dropClusters=true;
+    /**
+     * Drop Sequences
+     */
+    private boolean dropSequences=true;
+    /**
+     * Drop Policies
+     */
+    private boolean dropPolicies=true;
+
+    //Arguments
+    private static final String ARG_DISABLE_DROP_ALL="--disableDrop";
+    private static final String ARG_DISABLE_DROP_CLUSTER="--disableDrop-clusters";
+    private static final String ARG_DISABLE_DROP_COLUMNS="--disableDrop-columns";
+    private static final String ARG_DISABLE_DROP_TABLES="--disableDrop-tables";
+    private static final String ARG_DISABLE_DROP_CONSTRAINTS="--disableDrop-constraints";
+    private static final String ARG_DISABLE_DROP_FUNCTIONS="--disableDrop-functions";
+    private static final String ARG_DISABLE_DROP_INDEXES="--disableDrop-indexes";
+    private static final String ARG_DISABLE_DROP_POLICIES="--disableDrop-policies";
+    private static final String ARG_DISABLE_DROP_PROCEDURES="--disableDrop-procedures";
+    private static final String ARG_DISABLE_DROP_RULES="--disableDrop-rules";
+    private static final String ARG_DISABLE_DROP_SEQUENCES="--disableDrop-sequences";
+    private static final String ARG_DISABLE_DROP_TRIGGERS="--disableDrop-triggers";
+    private static final String ARG_DISABLE_DROP_TYPES="--disableDrop-types";
+    private static final String ARG_DISABLE_DROP_VIEWS="--disableDrop-views";    
+    
     /**
      * Setter for {@link #addDefaults}.
      *
@@ -267,6 +337,38 @@ public class PgDiffArguments {
                 setVersion(true);
             } else if ("--drop-if-exists".equals(args[i])) {
                PgDiffUtils.setUseExists(true);
+            } else if (ARG_DISABLE_DROP_ALL.equals(args[i])) {
+               disableDrop();
+            } else if (ARG_DISABLE_DROP_CLUSTER.equals(args[i])) {
+               setDropClusters(false);
+            } else if (ARG_DISABLE_DROP_COLUMNS.equals(args[i])) {
+               setDropColumns(false);
+            } else if (ARG_DISABLE_DROP_CONSTRAINTS.equals(args[i])) {
+               setDropConstraints(false);
+            } else if (ARG_DISABLE_DROP_FUNCTIONS.equals(args[i])) {
+               setDropFunctions(false);
+            } else if (ARG_DISABLE_DROP_INDEXES.equals(args[i])) {
+               setDropIndexes(false);
+            } else if (ARG_DISABLE_DROP_POLICIES.equals(args[i])) {
+               setDropPolicies(false);
+            } else if (ARG_DISABLE_DROP_PROCEDURES.equals(args[i])) {
+               setDropProcedures(false);
+            } else if (ARG_DISABLE_DROP_RULES.equals(args[i])) {
+               setDropRules(false);
+            } else if (ARG_DISABLE_DROP_SEQUENCES.equals(args[i])) {
+               setDropSequences(false);
+            } 
+            else if (ARG_DISABLE_DROP_TABLES.equals(args[i])) {
+               setDropTables(false);
+            } 
+            else if (ARG_DISABLE_DROP_TRIGGERS.equals(args[i])) {
+               setDropTriggers(success);
+            } 
+            else if (ARG_DISABLE_DROP_TYPES.equals(args[i])) {
+               setDropTypes(false);
+            } 
+            else if (ARG_DISABLE_DROP_VIEWS.equals(args[i])) {
+               setDropViews(false);
             } else {
                 writer.print(Resources.getString("ErrorUnknownOption"));
                 writer.print(": ");
@@ -292,6 +394,23 @@ public class PgDiffArguments {
         }
 
         return success;
+    }
+    
+    private void disableDrop()
+    {
+       setDropClusters(false);
+       setDropColumns(false);
+       setDropConstraints(false);
+       setDropFunctions(false);
+       setDropIndexes(false);
+       setDropPolicies(false);
+       setDropProcedures(false);
+       setDropRules(false);
+       setDropSequences(false);
+       setDropTables(false);
+       setDropTriggers(false);
+       setDropTypes(false);
+       setDropViews(false);
     }
 
     /**
@@ -417,4 +536,279 @@ public class PgDiffArguments {
     public void setIgnoreSchemaCreation(final boolean ignoreSchemaCreation) {
         this.ignoreSchemaCreation = ignoreSchemaCreation;
     }
+
+   /**
+    * Getter for {@link #dropColumns}.
+    *
+    * @return {@link #dropColumns}
+    */
+   public boolean isDropColumns()
+   {
+      return dropColumns;
+   }
+
+   /**
+    * Getter for {@link #dropTables}.
+    *
+    * @return {@link #dropTables}
+    */
+   public boolean isDropTables()
+   {
+      return dropTables;
+   }
+
+   /**
+    * Getter for {@link #dropConstraints}.
+    *
+    * @return {@link #dropConstraints}
+    */
+   public boolean isDropConstraints()
+   {
+      return dropConstraints;
+   }
+
+   /**
+    * Getter for {@link #dropViews}.
+    *
+    * @return {@link #dropViews}
+    */
+   public boolean isDropViews()
+   {
+      return dropViews;
+   }
+
+   /**
+    * Getter for {@link #dropTypes}.
+    *
+    * @return {@link #dropTypes}
+    */
+   public boolean isDropTypes()
+   {
+      return dropTypes;
+   }
+
+   /**
+    * Getter for {@link #dropTriggers}.
+    *
+    * @return {@link #dropTriggers}
+    */
+   public boolean isDropTriggers()
+   {
+      return dropTriggers;
+   }
+
+   /**
+    * Getter for {@link #dropRules}.
+    *
+    * @return {@link #dropRules}
+    */
+   public boolean isDropRules()
+   {
+      return dropRules;
+   }
+
+   /**
+    * Getter for {@link #dropFunctions}.
+    *
+    * @return {@link #dropFunctions}
+    */
+   public boolean isDropFunctions()
+   {
+      return dropFunctions;
+   }
+
+   /**
+    * Getter for {@link #dropProcedures}.
+    *
+    * @return {@link #dropProcedures}
+    */
+   public boolean isDropProcedures()
+   {
+      return dropProcedures;
+   }
+
+   /**
+    * Getter for {@link #dropIndexes}.
+    *
+    * @return {@link #dropIndexes}
+    */
+   public boolean isDropIndexes()
+   {
+      return dropIndexes;
+   }
+
+   /**
+    * Getter for {@link #dropClusters}.
+    *
+    * @return {@link #dropClusters}
+    */
+   public boolean isDropClusters()
+   {
+      return dropClusters;
+   }
+
+   /**
+    * Getter for {@link #dropSequences}.
+    *
+    * @return {@link #dropSequences}
+    */
+   public boolean isDropSequences()
+   {
+      return dropSequences;
+   }
+
+   /**
+    * Getter for {@link #dropPolicies}.
+    *
+    * @return {@link #dropPolicies}
+    */
+   public boolean isDropPolicies()
+   {
+      return dropPolicies;
+   }
+
+   /**
+    * Setter for {@link #dropColumns}.
+    *
+    * @param dropColumns {@link #dropColumns}
+    */
+   
+   public void setDropColumns(boolean dropColumns)
+   {
+      this.dropColumns = dropColumns;
+   }
+
+   /**
+    * Setter for {@link #dropTables}.
+    *
+    * @param dropTables {@link #dropTables}
+    */
+   
+   public void setDropTables(boolean dropTables)
+   {
+      this.dropTables = dropTables;
+   }
+
+   /**
+    * Setter for {@link #dropConstraints}.
+    *
+    * @param dropConstraints {@link #dropConstraints}
+    */
+   
+   public void setDropConstraints(boolean dropConstraints)
+   {
+      this.dropConstraints = dropConstraints;
+   }
+
+   /**
+    * Setter for {@link #dropViews}.
+    *
+    * @param dropViews {@link #dropViews}
+    */
+   
+   public void setDropViews(boolean dropViews)
+   {
+      this.dropViews = dropViews;
+   }
+
+   /**
+    * Setter for {@link #dropTypes}.
+    *
+    * @param dropTypes {@link #dropTypes}
+    */
+   
+   public void setDropTypes(boolean dropTypes)
+   {
+      this.dropTypes = dropTypes;
+   }
+
+   /**
+    * Setter for {@link #dropTriggers}.
+    *
+    * @param dropTriggers {@link #dropTriggers}
+    */
+   
+   public void setDropTriggers(boolean dropTriggers)
+   {
+      this.dropTriggers = dropTriggers;
+   }
+
+   /**
+    * Setter for {@link #dropRules}.
+    *
+    * @param dropRules {@link #dropRules}
+    */
+   
+   public void setDropRules(boolean dropRules)
+   {
+      this.dropRules = dropRules;
+   }
+
+   /**
+    * Setter for {@link #dropFunctions}.
+    *
+    * @param dropFunctions {@link #dropFunctions}
+    */
+   
+   public void setDropFunctions(boolean dropFunctions)
+   {
+      this.dropFunctions = dropFunctions;
+   }
+
+   /**
+    * Setter for {@link #dropProcedures}.
+    *
+    * @param dropProcedures {@link #dropProcedures}
+    */
+   
+   public void setDropProcedures(boolean dropProcedures)
+   {
+      this.dropProcedures = dropProcedures;
+   }
+
+   /**
+    * Setter for {@link #dropIndexes}.
+    *
+    * @param dropIndexes {@link #dropIndexes}
+    */
+   
+   public void setDropIndexes(boolean dropIndexes)
+   {
+      this.dropIndexes = dropIndexes;
+   }
+
+   /**
+    * Setter for {@link #dropClusters}.
+    *
+    * @param dropClusters {@link #dropClusters}
+    */
+   
+   public void setDropClusters(boolean dropClusters)
+   {
+      this.dropClusters = dropClusters;
+   }
+
+   /**
+    * Setter for {@link #dropSequences}.
+    *
+    * @param dropSequences {@link #dropSequences}
+    */
+   
+   public void setDropSequences(boolean dropSequences)
+   {
+      this.dropSequences = dropSequences;
+   }
+
+   /**
+    * Setter for {@link #dropPolicies}.
+    *
+    * @param dropPolicies {@link #dropPolicies}
+    */
+   
+   public void setDropPolicies(boolean dropPolicies)
+   {
+      this.dropPolicies = dropPolicies;
+   }
+    
+    
 }

@@ -270,38 +270,27 @@ public class PgDiff {
                     writer.println(" IS NULL;");
                 }
             }
-
-            PgDiffTriggers.dropTriggers(
-                    writer, oldSchema, newSchema, searchPathHelper);
-            PgDiffRules.dropRules(
-                    writer, oldSchema, newSchema, searchPathHelper);                  
-            PgDiffFunctions.dropFunctions(
-                    writer, arguments, oldSchema, newSchema, searchPathHelper);
-            PgDiffProcedures.dropPocedures(
-                    writer, arguments, oldSchema, newSchema, searchPathHelper);
-            PgDiffViews.dropViews(
-                    writer, oldSchema, newSchema, searchPathHelper);
-            PgDiffConstraints.dropConstraints(
-                    writer, oldSchema, newSchema, true, searchPathHelper);
-            PgDiffConstraints.dropConstraints(
-                    writer, oldSchema, newSchema, false, searchPathHelper);
-            PgDiffIndexes.dropIndexes(
-                    writer, oldSchema, newSchema, searchPathHelper);
-            PgDiffTables.dropClusters(
-                    writer, oldSchema, newSchema, searchPathHelper);
-            PgDiffTables.dropTables(
-                    writer, oldSchema, newSchema, searchPathHelper);
-            PgDiffSequences.dropSequences(
-                    writer, oldSchema, newSchema, searchPathHelper);
-            PgDiffPolicies.dropPolicies(
-                    writer, oldSchema, newSchema, searchPathHelper);
+            
+            PgDiffTriggers.dropTriggers(arguments,writer, oldSchema, newSchema, searchPathHelper);
+            PgDiffRules.dropRules(arguments,writer, oldSchema, newSchema, searchPathHelper);                  
+            PgDiffFunctions.dropFunctions(arguments,writer, oldSchema, newSchema, searchPathHelper);
+            PgDiffProcedures.dropProcedures(arguments,writer, oldSchema, newSchema, searchPathHelper);
+            PgDiffViews.dropViews(arguments,writer, oldSchema, newSchema, searchPathHelper);
+            PgDiffConstraints.dropConstraints(arguments,writer, oldSchema, newSchema, true, searchPathHelper);
+            PgDiffConstraints.dropConstraints(arguments,writer, oldSchema, newSchema, false, searchPathHelper);
+            PgDiffIndexes.dropIndexes(arguments,writer, oldSchema, newSchema, searchPathHelper);
+            PgDiffTables.dropClusters(arguments,writer, oldSchema, newSchema, searchPathHelper);
+            PgDiffTables.dropTables(arguments,writer, oldSchema, newSchema, searchPathHelper);
+            PgDiffSequences.dropSequences(arguments,writer, oldSchema, newSchema, searchPathHelper);
+            PgDiffPolicies.dropPolicies(arguments,writer, oldSchema, newSchema, searchPathHelper);
+            
             PgDiffSequences.createSequences(
                     writer, oldSchema, newSchema, searchPathHelper);
             PgDiffSequences.alterSequences(
                     writer, arguments, oldSchema, newSchema, searchPathHelper);
             PgDiffTypes.alterTypes(writer, arguments, oldSchema, newSchema, searchPathHelper);
             PgDiffTypes.createTypes(writer, oldSchema, newSchema, searchPathHelper);
-            PgDiffTypes.dropTypes(writer, oldSchema, newSchema, searchPathHelper);
+            PgDiffTypes.dropTypes(arguments,writer, oldSchema, newSchema, searchPathHelper);
             PgDiffTables.createTables(
                     writer, oldSchema, newSchema, searchPathHelper);
             PgDiffTables.alterTables(

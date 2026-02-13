@@ -10,6 +10,7 @@ import cz.startnet.utils.pgdiff.schema.PgColumnPrivilege;
 import cz.startnet.utils.pgdiff.schema.PgSchema;
 import cz.startnet.utils.pgdiff.schema.PgView;
 import cz.startnet.utils.pgdiff.schema.PgRelationPrivilege;
+
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,11 +86,11 @@ public class PgDiffViews {
      * @param newSchema        new schema
      * @param searchPathHelper search path helper   
      */
-    public static void dropViews(final PrintWriter writer,
+    public static void dropViews(final PgDiffArguments arguments, final PrintWriter writer,
             final PgSchema oldSchema, final PgSchema newSchema,
             final SearchPathHelper searchPathHelper
             ) {
-        if (oldSchema == null) {
+        if (oldSchema == null || !arguments.isDropViews()) {
             return;
         }
 

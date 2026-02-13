@@ -8,6 +8,7 @@ package cz.startnet.utils.pgdiff;
 import cz.startnet.utils.pgdiff.schema.PgIndex;
 import cz.startnet.utils.pgdiff.schema.PgSchema;
 import cz.startnet.utils.pgdiff.schema.PgTable;
+
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,9 +60,12 @@ public class PgDiffIndexes {
      * @param newSchema        new schema
      * @param searchPathHelper search path helper
      */
-    public static void dropIndexes(final PrintWriter writer,
+    public static void dropIndexes(final PgDiffArguments arguments,final PrintWriter writer,
             final PgSchema oldSchema, final PgSchema newSchema,
             final SearchPathHelper searchPathHelper) {
+       if(!arguments.isDropIndexes()){
+          return;
+       }
         for (final PgTable newTable : newSchema.getTables()) {
             final String newTableName = newTable.getName();
             final PgTable oldTable;

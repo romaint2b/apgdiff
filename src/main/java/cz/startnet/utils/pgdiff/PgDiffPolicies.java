@@ -5,14 +5,14 @@
  */
 package cz.startnet.utils.pgdiff;
 
-import cz.startnet.utils.pgdiff.schema.*;
 import java.io.PrintWriter;
-import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Iterator;
+import java.util.List;
+
+import cz.startnet.utils.pgdiff.schema.PgPolicy;
+import cz.startnet.utils.pgdiff.schema.PgSchema;
+import cz.startnet.utils.pgdiff.schema.PgTable;
 
 public class PgDiffPolicies {
 
@@ -93,9 +93,13 @@ public class PgDiffPolicies {
         }
     }
 
-    public static void dropPolicies(final PrintWriter writer,
+    public static void dropPolicies(final PgDiffArguments arguments,final PrintWriter writer,
             final PgSchema oldSchema, final PgSchema newSchema,
             final SearchPathHelper searchPathHelper) {
+       if(!arguments.isDropPolicies())
+       {
+          return;
+       }
         for (final PgTable newTable : newSchema.getTables()) {
             final String newTableName = newTable.getName();
 
